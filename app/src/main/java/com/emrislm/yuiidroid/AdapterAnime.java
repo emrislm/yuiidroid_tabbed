@@ -1,9 +1,7 @@
 package com.emrislm.yuiidroid;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -14,17 +12,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
+public class AdapterAnime extends RecyclerView.Adapter<AdapterAnime.ViewHolder> {
 
     List<String> titles;
     List<String> imgurls;
     LayoutInflater inflater;
     Context context;
 
-    public Adapter(Context context, List<String> titles, List<String> imgurls) {
+    public AdapterAnime(Context context, List<String> titles, List<String> imgurls) {
         this.context = context;
         this.titles = titles;
         this.imgurls = imgurls;
@@ -34,14 +31,14 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
     @NonNull
     @Override
-    public Adapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public AdapterAnime.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = inflater.inflate(R.layout.listview_anime, parent, false);
 
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull Adapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull AdapterAnime.ViewHolder holder, int position) {
         holder.title.setText(titles.get(position));
         Picasso.get().load(imgurls.get(position)).into(holder.cover);
     }

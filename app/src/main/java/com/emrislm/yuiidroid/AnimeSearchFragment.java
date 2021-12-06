@@ -33,7 +33,7 @@ public class AnimeSearchFragment extends Fragment implements View.OnClickListene
     private EditText editText_animeInput;
     private RecyclerView listView_animesListView;
     private ImageButton button_search;
-    private Adapter adapter;
+    private AdapterAnime adapterAnime;
 
     private static final String TAG = "AnimeSearchFragment";
 
@@ -118,11 +118,11 @@ public class AnimeSearchFragment extends Fragment implements View.OnClickListene
         }
 
         // create and set the adapter
-        adapter = new Adapter(getActivity(), titles, imgurls);
+        adapterAnime = new AdapterAnime(getActivity(), titles, imgurls);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2, RecyclerView.VERTICAL, false);
 
         listView_animesListView.setLayoutManager(gridLayoutManager);
-        listView_animesListView.setAdapter(adapter);
+        listView_animesListView.setAdapter(adapterAnime);
 
         Log.d("dinges", "Feed displayed");
     }
