@@ -34,6 +34,7 @@ public class MangaActivity extends AppCompatActivity {
     TextView descriptionTextView;
     RecyclerView charactersListView;
     ListView statsListView;
+    ListView commentsListView;
 
     int MAL_ID;
 
@@ -41,6 +42,9 @@ public class MangaActivity extends AppCompatActivity {
     ArrayList<MangaCharacters> tempCharactersList;
 
     MangaStats tempStats;
+
+    MangaComment tempComment;
+    ArrayList<MangaComment> tempCommentsList;
 
     AdapterCharacters adapter;
 
@@ -58,6 +62,7 @@ public class MangaActivity extends AppCompatActivity {
         descriptionTextView = (TextView) findViewById(R.id.manga_activity_descriptionTextView);
         charactersListView = (RecyclerView) findViewById(R.id.manga_activity_charactersRecyclerView);
         statsListView = (ListView) findViewById(R.id.manga_statsListView);
+        commentsListView = (ListView) findViewById(R.id.manga_commentsListView);
 
         MAL_ID = getManga();
         new GetMangaData().start();
@@ -68,6 +73,7 @@ public class MangaActivity extends AppCompatActivity {
         public void run() {
             getCharacters(MAL_ID);
             getStats(MAL_ID);
+            getComments(MAL_ID);
 
             runOnUiThread(new Runnable() {
                 @Override
@@ -81,9 +87,36 @@ public class MangaActivity extends AppCompatActivity {
     public void updateDisplay() {
         displayCharacters();
         displayStats();
+        displayComments();
     }
 
     //-----------------------------------------DISPLAY FUNC-------------------------------------
+    public void displayComments() {
+        if (tempComment == null) {
+            Toast toast = Toast.makeText(this, "No comments found", Toast.LENGTH_LONG);
+            toast.show();
+
+            return;
+        }
+
+        ArrayList<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
+        for (MangaComment comment : tempCommentsList) {
+            HashMap<String, String> map = new HashMap<String, String>();
+            map.put("title", comment.getTitle());
+            map.put("date_posted", comment.getPostedDateFormatted());
+            map.put("author", comment.getAuthor());
+            map.put("replies", String.valueOf(comment.getReplies()));
+            data.add(map);
+        }
+
+        int resource = R.layout.listview_comments_manga;
+        String[] from = { "title", "date_posted", "author", "replies" };
+        int[] to = { R.id.manga_comment_title, R.id.manga_comment_date, R.id.manga_comment_author, R.id.manga_comment_replies };
+
+        // create and set the adapter
+        SimpleAdapter adapter = new SimpleAdapter(this, data, resource, from, to);
+        commentsListView.setAdapter(adapter);
+    }
     public void displayStats() {
         if (tempStats == null) {
             Toast toast = Toast.makeText(this, "No stats found", Toast.LENGTH_LONG);
@@ -138,6 +171,36 @@ public class MangaActivity extends AppCompatActivity {
     //-----------------------------------------END DISPLAY FUNC---------------------------------
 
     //-----------------------------------------DATA GETTERS-------------------------------------
+    public void getComments(int id) {
+        String COMMENTURL = BASEURL + String.valueOf(id) + "/forum";
+
+        HttpHandler sh = new HttpHandler();
+        String jsonStr = sh.makeServiceCall(COMMENTURL);
+
+        tempCommentsList = new ArrayList<>();
+
+        if (jsonStr != null) {
+            try {
+                JSONObject jsonObj = new JSONObject(jsonStr);
+                JSONArray commentResults  = jsonObj.getJSONArray("topics");
+
+                for (int i = 0; i < commentResults.length(); i++) {
+                    tempComment = new MangaComment();
+                    JSONObject comment = commentResults.getJSONObject(i);
+
+                    tempComment.setTitle(comment.getString("title"));
+                    tempComment.setDate_posted(comment.getString("date_posted"));
+                    tempComment.setAuthor(comment.getString("author_name"));
+                    tempComment.setReplies(comment.getInt("replies"));
+
+                    tempCommentsList.add(tempComment);
+                }
+            }
+            catch (JSONException e) {
+                Log.d("det", e.toString());
+            }
+        }
+    }
     public void getStats(int id) {
         String STATSURL = BASEURL + String.valueOf(id) + "/stats";
 

@@ -199,5 +199,31 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical" />
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/textView14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="24dp"
+            android:fontFamily="sans-serif"
+            android:text="Comments"
+            android:textAllCaps="true"
+            android:textColor="#2196F3"
+            android:textFontWeight="700"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/manga_statsLayout" />
+
+        <ListView
+            android:id="@+id/manga_commentsListView"
+            android:layout_width="match_parent"
+            android:layout_height="500dp"
+            android:background="#BBDEFB"
+            android:orientation="vertical"
+            android:padding="15dp"
+            android:nestedScrollingEnabled="true"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView14" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>
