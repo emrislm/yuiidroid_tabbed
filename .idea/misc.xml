@@ -3,7 +3,13 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Z_School/3ICT/Mobiele_Apps2/yuiidroid_new/app/src/main/res/layout/activity_anime.xml" value="0.1" />
+        <entry key="..\:/Z_School/3ICT/Mobiele_Apps2/yuiidroid_new/app/src/main/res/layout/activity_main.xml" value="0.371875" />
+        <entry key="..\:/Z_School/3ICT/Mobiele_Apps2/yuiidroid_new/app/src/main/res/layout/activity_manga.xml" value="0.371875" />
+        <entry key="..\:/Z_School/3ICT/Mobiele_Apps2/yuiidroid_new/app/src/main/res/layout/fragment_anime_search.xml" value="0.371875" />
         <entry key="..\:/Z_School/3ICT/Mobiele_Apps2/yuiidroid_new/app/src/main/res/layout/fragment_main.xml" value="0.371875" />
+        <entry key="..\:/Z_School/3ICT/Mobiele_Apps2/yuiidroid_new/app/src/main/res/layout/fragment_manga_search.xml" value="0.371875" />
+        <entry key="..\:/Z_School/3ICT/Mobiele_Apps2/yuiidroid_new/app/src/main/res/layout/listview_staff.xml" value="0.371875" />
       </map>
     </option>
   </component>

@@ -127,7 +127,6 @@ public class AnimeSearchFragment extends Fragment implements View.OnClickListene
         Log.d("dinges", "Feed displayed");
     }
 
-
     public void getAnimeResults() {
         HttpHandler sh = new HttpHandler();
         String jsonStr = sh.makeServiceCall(URL_STRING);
