@@ -11,11 +11,14 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -23,7 +26,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class AnimeSearchFragment extends Fragment implements View.OnClickListener {
+public class AnimeSearchFragment extends Fragment implements TextView.OnEditorActionListener {
 
     private String URL_STRING = "https://api.jikan.moe/v3/search/anime?q=";
     private Anime tempAnime;
@@ -32,7 +35,6 @@ public class AnimeSearchFragment extends Fragment implements View.OnClickListene
     // define variables for the widgets
     private EditText editText_animeInput;
     private RecyclerView listView_animesListView;
-    private ImageButton button_search;
     private AdapterAnime adapterAnime;
 
     private static final String TAG = "AnimeSearchFragment";
@@ -54,10 +56,10 @@ public class AnimeSearchFragment extends Fragment implements View.OnClickListene
         // get references to the widgets
         editText_animeInput = (EditText) view.findViewById(R.id.EditText_animeInput);
         listView_animesListView = (RecyclerView) view.findViewById(R.id.ListView_animesListView);
-        button_search = (ImageButton) view.findViewById(R.id.Button_search);
+
+        editText_animeInput.setOnEditorActionListener(this);
 
         // set the listeners
-        button_search.setOnClickListener(this);
         listView_animesListView.addOnItemTouchListener(
                 new RecyclerItemClickListener(getActivity(), listView_animesListView, new RecyclerItemClickListener.OnItemClickListener() {
                     @Override
@@ -86,19 +88,16 @@ public class AnimeSearchFragment extends Fragment implements View.OnClickListene
     }
 
     @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.Button_search:
-                Log.d("dinges", "KNOP GEDRUKT");
-                String inputText = editText_animeInput.getText().toString();
-                URL_STRING = URL_STRING + inputText;
+    public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+        if (i == EditorInfo.IME_ACTION_SEARCH) {
+            String inputText = editText_animeInput.getText().toString();
+            URL_STRING = URL_STRING + inputText;
 
-                new getAnimesFromSearch().start();
-                Log.d("dinges", "getAnimesFromSearch UITGEVOERD");
-
-                inputText = "";
-                break;
+            new getAnimesFromSearch().start();
+            inputText = "";
         }
+
+        return true;
     }
 
     public void updateDisplay() {

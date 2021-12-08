@@ -11,11 +11,14 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -23,7 +26,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class MangaSearchFragment extends Fragment implements View.OnClickListener {
+public class MangaSearchFragment extends Fragment implements TextView.OnEditorActionListener {
 
     private String URL_STRING = "https://api.jikan.moe/v3/search/manga?q=";
     private Manga tempManga;
@@ -32,7 +35,6 @@ public class MangaSearchFragment extends Fragment implements View.OnClickListene
     // define variables for the widgets
     private EditText editText_mangaInput;
     private RecyclerView listView_mangasListView;
-    private ImageButton button_search;
     private AdapterManga adapterManga;
 
     private static final String TAG = "MangaSearchFragment";
@@ -54,10 +56,10 @@ public class MangaSearchFragment extends Fragment implements View.OnClickListene
         // get references to the widgets
         editText_mangaInput = (EditText) view.findViewById(R.id.EditText_mangaInput);
         listView_mangasListView = (RecyclerView) view.findViewById(R.id.ListView_mangasListView);
-        button_search = (ImageButton) view.findViewById(R.id.Button_search_manga);
+
+        editText_mangaInput.setOnEditorActionListener(this);
 
         // set the listeners
-        button_search.setOnClickListener(this);
         listView_mangasListView.addOnItemTouchListener(
                 new RecyclerItemClickListener(getActivity(), listView_mangasListView, new RecyclerItemClickListener.OnItemClickListener() {
                     @Override
@@ -87,19 +89,16 @@ public class MangaSearchFragment extends Fragment implements View.OnClickListene
     }
 
     @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.Button_search_manga:
-                Log.d("dinges", "KNOP GEDRUKT");
-                String inputText = editText_mangaInput.getText().toString();
-                URL_STRING = URL_STRING + inputText;
+    public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+        if (i == EditorInfo.IME_ACTION_SEARCH) {
+            String inputText = editText_mangaInput.getText().toString();
+            URL_STRING = URL_STRING + inputText;
 
-                new MangaSearchFragment.getMangasFromSearch().start();
-                Log.d("dinges", "getMangasFromSearch UITGEVOERD");
-
-                inputText = "";
-                break;
+            new getMangasFromSearch().start();
+            inputText = "";
         }
+
+        return true;
     }
 
     public void updateDisplay() {
