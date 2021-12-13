@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.emrislm.yuiidroid.AnimeSearchFragment;
+import com.emrislm.yuiidroid.HomeFragment;
 import com.emrislm.yuiidroid.MangaSearchFragment;
 import com.emrislm.yuiidroid.R;
 
@@ -19,7 +20,7 @@ import com.emrislm.yuiidroid.R;
 public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
     @StringRes
-    private static final int[] TAB_TITLES = new int[]{ R.string.tab_anime_title, R.string.tab_manga_title };
+    private static final int[] TAB_TITLES = new int[]{ R.string.tab_home_title, R.string.tab_anime_title, R.string.tab_manga_title };
     private final Context mContext;
 
     public SectionsPagerAdapter(Context context, FragmentManager fm) {
@@ -36,10 +37,14 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
         Fragment fragment = null;
         switch (position) {
             case 0:
-                fragment = new AnimeSearchFragment();
+                fragment = new HomeFragment();
                 break;
 
             case 1:
+                fragment = new AnimeSearchFragment();
+                break;
+
+            case 2:
                 fragment = new MangaSearchFragment();
                 break;
         }
@@ -56,6 +61,6 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     @Override
     public int getCount() {
         // Show 2 total pages.
-        return 2;
+        return 3;
     }
 }

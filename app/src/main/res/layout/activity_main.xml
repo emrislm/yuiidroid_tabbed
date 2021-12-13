@@ -12,6 +12,7 @@
         android:theme="@style/Theme.Yuiidroid.AppBarOverlay">
 
         <com.google.android.material.tabs.TabLayout
+            app:tabInlineLabel="true"
             android:id="@+id/tabs"
             android:background="#BBDEFB"
             android:layout_width="match_parent"
