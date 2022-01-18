@@ -8,7 +8,6 @@ public class AnimeTop {
     private String url;
     private String image_url;
     private String type;
-    private int episodes;
     private String start_date;
     private String end_date;
     private int members;
@@ -31,9 +30,6 @@ public class AnimeTop {
 
     public String getType() { return type; }
     public void setType(String type) { this.type = type; }
-
-    public int getEpisodes() { return episodes; }
-    public void setEpisodes(int episodes) { this.episodes = episodes; }
 
     public String getStart_date() { return start_date; }
     public void setStart_date(String start_date) { this.start_date = start_date; }
