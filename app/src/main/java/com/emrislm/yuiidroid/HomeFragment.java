@@ -57,6 +57,74 @@ public class HomeFragment extends Fragment {
         listView_TopAnimesListView = (RecyclerView) view.findViewById(R.id.ListView_topAnimesListView);
         listView_TopMangasListView = (RecyclerView) view.findViewById(R.id.ListView_topMangasListView);
 
+        // set the listeners
+        listView_TopAnimesListView.addOnItemTouchListener(
+                new RecyclerItemClickListener(getContext(), listView_TopAnimesListView, new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View view, int position) {
+                        //get anime
+                        AnimeTop topanime = topAnimeList.get(position);
+                        Anime anime = new Anime();
+
+                        // convert AnimeTop to Anime
+                        anime.setMal_id(topanime.getMal_id());
+                        anime.setImage_url(topanime.getImage_url());
+                        anime.setTitle(topanime.getTitle());
+                        anime.setEpisodes(0);
+                        anime.setScore(topanime.getScore());
+                        anime.setSynopsis("/");
+
+                        //create intent
+                        Intent intent = new Intent(getContext(), AnimeActivity.class);
+                        intent.putExtra("mal_id", anime.getMal_id());
+                        intent.putExtra("image_url", anime.getImage_url());
+                        intent.putExtra("title", anime.getTitle());
+                        intent.putExtra("episodes", anime.getEpisodes());
+                        intent.putExtra("score", anime.getScore());
+                        intent.putExtra("synopsis", anime.getSynopsis());
+
+                        getActivity().startActivity(intent);
+                    }
+
+                    @Override
+                    public void onLongItemClick(View view, int position) { }
+                })
+        );
+        listView_TopMangasListView.addOnItemTouchListener(
+                new RecyclerItemClickListener(getContext(), listView_TopMangasListView, new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View view, int position) {
+                        //get manga
+                        MangaTop topManga = topMangaList.get(position);
+                        Manga manga = new Manga();
+
+                        // convert MangaTop to Manga
+                        manga.setMal_id(topManga.getMal_id());
+                        manga.setImage_url(topManga.getImage_url());
+                        manga.setTitle(topManga.getTitle());
+                        manga.setChapters(0);
+                        manga.setVolumes(0);
+                        manga.setScore(topManga.getScore());
+                        manga.setSynopsis("/");
+
+                        //create intent
+                        Intent intent = new Intent(getContext(), MangaActivity.class);
+                        intent.putExtra("mal_id", manga.getMal_id());
+                        intent.putExtra("image_url", manga.getImage_url());
+                        intent.putExtra("title", manga.getTitle());
+                        intent.putExtra("chapters", manga.getChapters());
+                        intent.putExtra("volumes", manga.getVolumes());
+                        intent.putExtra("score", manga.getScore());
+                        intent.putExtra("synopsis", manga.getSynopsis());
+
+                        getActivity().startActivity(intent);
+                    }
+
+                    @Override
+                    public void onLongItemClick(View view, int position) { }
+                })
+        );
+
         new getTopFromSearch().start();
         return view;
     }
